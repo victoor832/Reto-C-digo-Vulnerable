@@ -12,14 +12,6 @@
     let editor;  // Variable para almacenar la instancia del editor
     const originalCode = `#include <stdio.h>
 #include <string.h>
-
-void vulnerable_function(char* str1, char* str2) {
-    char buffer[20];
-    strcpy(buffer, str1);
-    strcat(buffer, str2);
-    printf("Result: %s", buffer);
-}
-
 int main() {
     char str1[100], str2[100];
     printf("Enter string 1: ");
@@ -91,6 +83,10 @@ int main() {
 #include <string.h>
 
 void vulnerable_function(char* str1, char* str2) {
+    char buffer[20];
+    strcpy(buffer, str1);
+    strcat(buffer, str2);
+    printf("Result: %s", buffer);
 }
 
 int main() {
