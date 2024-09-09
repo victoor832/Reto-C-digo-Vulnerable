@@ -98,18 +98,11 @@ void vulnerable_function(char* str1, char* str2) {
 }
 
 int main() {
-    char str1[100], str2[100];
-    printf("Enter string 1: ");
-    gets(str1);
-    printf("Enter string 2: ");
-    gets(str2);
-    vulnerable_function(str1, str2);
-    return 0;
 }`;
 
       if (currentCode.trim() === expectedCode.trim()) {
         // Redirigir a otra página si el código es correcto
-        window.location.href = "/reto_2/index_2.html";
+        window.location.href = "pagina_final.html";
       } else {
         alert("El código no es correcto.");
       }

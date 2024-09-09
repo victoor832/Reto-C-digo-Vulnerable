@@ -91,10 +91,6 @@ int main() {
 #include <string.h>
 
 void vulnerable_function(char* str1, char* str2) {
-    char buffer[20];
-    strcpy(buffer, str1);
-    strcat(buffer, str2);
-    printf("Result: %s", buffer);
 }
 
 int main() {
@@ -109,7 +105,7 @@ int main() {
 
       if (currentCode.trim() === expectedCode.trim()) {
         // Redirigir a otra página si el código es correcto
-        window.location.href = "/reto_2/index_2.html";
+        window.location.href = "../reto_3/index_3.html";
       } else {
         alert("El código no es correcto.");
       }
