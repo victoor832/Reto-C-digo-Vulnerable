@@ -11,7 +11,7 @@
 
     let editor;  // Variable para almacenar la instancia del editor
     const originalCode = `
-void vulnerable_function(int x)
+void challenge_three(int x)
 {
     int result = 10 / x;
 }
@@ -75,7 +75,7 @@ void vulnerable_function(int x)
     function submitCode() {
       const currentCode = editor.getValue();
       const expectedCode = `
-void safe_function(int x)
+void challenge_three(int x)
 {
     if (x != 0)
         int result = 10 / x;

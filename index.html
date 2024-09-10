@@ -143,7 +143,7 @@ int main() {
 
     let editor;  // Variable para almacenar la instancia del editor
     const originalCode = `
-void vulnerable_function()
+void challenge_one()
 {
     int arr[5];
     arr[5] = 10;
@@ -213,7 +213,7 @@ void vulnerable_function()
     function submitCode() {
       const currentCode = editor.getValue();
       const expectedCode = `
-void safe_function()
+void challenge_one()
 {
     int arr[5];
     arr[4] = 10;
