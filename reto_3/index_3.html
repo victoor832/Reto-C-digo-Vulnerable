@@ -82,12 +82,16 @@ void challenge_three(int x)
 }
 `;
 
-      if (currentCode.trim() === expectedCode.trim()) {
-        // Redirigir a otra página si el código es correcto
-        window.location.href = "pagina_final.html";
-      } else {
-        alert("El código no es correcto.");
-      }
+    try {
+        if (currentCode.trim() === expectedCode.trim()) {
+            window.location.href = "../pagina_final/index.html";
+        } else {
+            throw new Error("Código incorrecto");
+        }
+    } catch (error) {
+        alert(error.message);
+    }
+
     }
 
     // Agregar eventos a los botones
