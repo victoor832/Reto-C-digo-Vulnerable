@@ -10,25 +10,12 @@
     require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.33.0/min/vs' } });
 
     let editor;  // Variable para almacenar la instancia del editor
-    const originalCode = `#include <stdio.h>
-#include <string.h>
-
-void vulnerable_function(char* str1, char* str2) {
-    char buffer[20];
-    strcpy(buffer, str1);
-    strcat(buffer, str2);
-    printf("Result: %s", buffer);
+    const originalCode = `
+    void vulnerable_function()
+{
+    int *ptr = malloc(sizeof(int) * 10);
 }
-
-int main() {
-    char str1[100], str2[100];
-    printf("Enter string 1: ");
-    gets(str1);
-    printf("Enter string 2: ");
-    gets(str2);
-    vulnerable_function(str1, str2);
-    return 0;
-}`;
+`;
 
     require(['vs/editor/editor.main'], function() {
       // Definir el lenguaje C
@@ -87,18 +74,15 @@ int main() {
     // Función para verificar el código y redirigir si es correcto
     function submitCode() {
       const currentCode = editor.getValue();
-      const expectedCode = `#include <stdio.h>
-#include <string.h>
-
-void vulnerable_function(char* str1, char* str2) {
-    char buffer[20];
-    strcpy(buffer, str1);
-    strcat(buffer, str2);
-    printf("Result: %s", buffer);
+      const expectedCode = `
+void safe_function()
+{
+    int *ptr = malloc(sizeof(int) * 10);
+    if (ptr == NULL)
+        return; 
+    free(ptr);
 }
-
-int main() {
-}`;
+`;
 
       if (currentCode.trim() === expectedCode.trim()) {
         // Redirigir a otra página si el código es correcto

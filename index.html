@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!--<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -101,6 +101,130 @@ int main() {
       if (currentCode.trim() === expectedCode.trim()) {
         // Redirigir a otra página si el código es correcto
         window.location.href = "/reto_2/index_2.html";
+      } else {
+        alert("El código no es correcto.");
+      }
+    }
+
+    // Agregar eventos a los botones
+    window.onload = function() {
+      document.querySelector('.arc-btn-retro-delete').addEventListener('click', resetEditorContent);
+      document.querySelector('.arc-btn-retro-submit').addEventListener('click', submitCode);
+    };
+  </script>
+</head>
+<body>
+  <h1><img class="hacker-icon-right" src="hacker-svgrepo-com.svg" alt="hacker-icon">
+ Liga de Ciberseguridad 
+ <img class="hacker-icon-left" src="hacker-svgrepo-com.svg" alt="hacker-icon">
+  </h1>
+  <div id="container" class="container"></div>
+  <div class="buttons">
+    <button class="arc-btn-retro-delete">
+      Delete
+    </button>
+    <button class="arc-btn-retro-submit">
+      Submit
+    </button>
+  </div>
+</body>
+</html>-->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Monaco Editor</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.33.0/min/vs/loader.min.js"></script>
+  <script>
+    require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.33.0/min/vs' } });
+
+    let editor;  // Variable para almacenar la instancia del editor
+    const originalCode = `
+    void vulnerable_function()
+  {
+    char buffer[10];
+    strcpy(buffer, "Esto es un texto muy largo para el buffer.");
+  }
+`;
+
+    require(['vs/editor/editor.main'], function() {
+      // Definir el lenguaje C
+      monaco.languages.register({ id: 'c' });
+
+      // Proveedor de resaltado de sintaxis básico para C
+      monaco.languages.setMonarchTokensProvider('c', {
+        tokenizer: {
+          root: [
+            [/\b(int|float|char|double|void|if|else|while|for|return|switch|case|break|continue|default)\b/, 'keyword'],
+            [/\b(printf|scanf|main|sizeof|malloc|free)\b/, 'function'],
+            [/[a-zA-Z_][a-zA-Z0-9_]*/, 'identifier'],
+            [/[0-9]+/, 'number'],
+            [/".*?"/, 'string'],
+            [/\/\/.*/, 'comment'],
+            [/\/\*.*?\*\//, 'comment']
+          ]
+        }
+      });
+
+      // Registrar un tema personalizado para C
+      monaco.editor.defineTheme('vs-dark-custom-c', {
+        base: 'vs-dark',
+        inherit: true,
+        rules: [
+          { token: 'keyword', foreground: '569CD6', fontStyle: 'bold' },    // Palabras clave
+          { token: 'function', foreground: 'DCDCAA', fontStyle: 'bold' },   // Funciones
+          { token: 'identifier', foreground: '9CDCFE' },                     // Identificadores
+          { token: 'number', foreground: 'B5CEA8' },                         // Números
+          { token: 'string', foreground: 'CE9178' },                         // Cadenas
+          { token: 'comment', foreground: '6A9955', fontStyle: 'italic' }    // Comentarios
+        ],
+        colors: {
+          'editor.background': '#1E1E1E', // Fondo oscuro
+        }
+      });
+
+      // Crear el editor con lenguaje C y tema personalizado
+      editor = monaco.editor.create(document.getElementById('container'), {
+        value: originalCode,
+        language: 'c',    // Asignar el lenguaje C
+        theme: 'vs-dark-custom-c',  // Aplicar el tema personalizado
+        wordWrap: 'on',  // Activa el ajuste de línea, elimina el scroll horizontal
+        scrollBeyondLastLine: false,  // Evita el scroll más allá de la última línea
+        automaticLayout: true,  // Ajusta el tamaño del editor al contenedor
+        horizontal: 'hidden',   // Alternativa para desactivar scroll horizontal
+        vertical: 'hidden'      // Alternativa para desactivar scroll vertical
+      });
+    });
+
+    // Función para restablecer el contenido del editor al texto original
+    function resetEditorContent() {
+      editor.setValue(originalCode);
+    }
+
+    // Función para eliminar espacios y tabs
+    function removeWhitespace(code) {
+      return code.replace(/\s+/g, '');  // Elimina todos los espacios en blanco y tabs
+    }
+
+    // Función para verificar el código y redirigir si es correcto
+    function submitCode() {
+      const currentCode = editor.getValue();
+      const expectedCode = `
+void safe_function()
+{
+    char buffer[10];
+    strncpy(buffer, "Esto es un texto", sizeof(buffer) - 1);
+    buffer[9] = '\0';
+}
+`;
+
+      // Comparar el código sin espacios y tabs
+      if (removeWhitespace(currentCode.trim()) === removeWhitespace(expectedCode.trim())) {
+        // Redirigir a otra página si el código es correcto
+        window.location.href = "pagina_final.html";
       } else {
         alert("El código no es correcto.");
       }
