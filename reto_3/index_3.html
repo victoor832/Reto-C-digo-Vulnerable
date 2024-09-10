@@ -11,9 +11,9 @@
 
     let editor;  // Variable para almacenar la instancia del editor
     const originalCode = `
-    void vulnerable_function()
+void vulnerable_function(int x)
 {
-    int *ptr = malloc(sizeof(int) * 10);
+    int result = 10 / x;
 }
 `;
 
@@ -75,12 +75,10 @@
     function submitCode() {
       const currentCode = editor.getValue();
       const expectedCode = `
-void safe_function()
+void safe_function(int x)
 {
-    int *ptr = malloc(sizeof(int) * 10);
-    if (ptr == NULL)
-        return; 
-    free(ptr);
+    if (x != 0)
+        int result = 10 / x;
 }
 `;
 

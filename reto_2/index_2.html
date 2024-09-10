@@ -11,10 +11,11 @@
 
     let editor;  // Variable para almacenar la instancia del editor
     const originalCode = `
-    void vulnerable_function()
+void vulnerable_function()
 {
-    int *ptr;
-    *ptr = 5;
+    int a;
+    if (a > 0)
+        a = 10;
 }
 `;
 
@@ -76,11 +77,11 @@
     function submitCode() {
       const currentCode = editor.getValue();
       const expectedCode = `
-      void safe_function()
+void safe_function()
 {
-    int value = 5;
-    int *ptr = &value;
-    *ptr = 5;
+    int a = 0;
+    if (a > 0)
+        a = 10;
 }
 `;
 

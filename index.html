@@ -143,11 +143,11 @@ int main() {
 
     let editor;  // Variable para almacenar la instancia del editor
     const originalCode = `
-    void vulnerable_function()
-  {
-    char buffer[10];
-    strcpy(buffer, "Esto es un texto muy largo para el buffer.");
-  }
+void vulnerable_function()
+{
+    int arr[5];
+    arr[5] = 10;
+}
 `;
 
     require(['vs/editor/editor.main'], function() {
@@ -215,9 +215,8 @@ int main() {
       const expectedCode = `
 void safe_function()
 {
-    char buffer[10];
-    strncpy(buffer, "Esto es un texto", sizeof(buffer) - 1);
-    buffer[9] = '\0';
+    int arr[5];
+    arr[4] = 10;
 }
 `;
 
