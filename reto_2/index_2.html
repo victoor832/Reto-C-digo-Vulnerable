@@ -75,17 +75,17 @@ void challenge_two()
 
     // Función para verificar el código y redirigir si es correcto
     function submitCode() {
-      const currentCode = editor.getValue();
-      const expectedCode = `
-void challenge_two()
-{
-    int a = 0;
-    if (a > 0)
-        a = 10;
-}
-`;
+      const currentCode = editor.getValue().trim();
 
-      if (currentCode.trim() === expectedCode.trim()) {
+      // Expresión regular para buscar la declaración de la variable a con asignación >= 0
+      const regexAssign = /int\s+a\s*=\s*([0-9]+);/;
+      // Expresión regular para buscar la condición if con a >= 0 o a > 0
+      const regexIf = /if\s*\(a\s*(>=|>)\s*0\)/;
+
+      const matchAssign = currentCode.match(regexAssign);
+      const matchIf = regexIf.test(currentCode);
+
+      if (matchAssign && parseInt(matchAssign[1], 10) >= 0 && matchIf) {
         // Redirigir a otra página si el código es correcto
         window.location.href = "../reto_3/index_3.html";
       } else {
