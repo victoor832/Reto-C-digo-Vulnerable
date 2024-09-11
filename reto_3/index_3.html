@@ -78,18 +78,17 @@ void challenge_three(int x)
 void challenge_three(int x)
 {
     if (x != 0)
-        int result = 10 / x;
+    int result = 10 / x;
 }
 `;
 
-    try {
-        if (currentCode.trim() === expectedCode.trim()) {
-            window.location.href = "../pagina_final/index.html";
-        } else {
-            throw new Error("Código incorrecto");
-        }
-    } catch (error) {
-        alert(error.message);
+      // Comparar el código sin espacios y tabs
+      if (removeWhitespace(currentCode.trim()) === removeWhitespace(expectedCode.trim())) {
+        // Redirigir a otra página si el código es correcto
+        window.location.href = "/reto_2/index_2.html";
+      } else {
+        alert("El código no es correcto.");
+      }
     }
 
     }
