@@ -82,6 +82,11 @@ void challenge_three()
 }
 `;
 
+    // Función para eliminar espacios y tabs
+    function removeWhitespace(code) {
+      return code.replace(/\s+/g, '');  // Elimina todos los espacios en blanco y tabs
+    }
+
       // Comparar el código sin espacios y tabs
       if (removeWhitespace(currentCode.trim()) === removeWhitespace(expectedCode.trim())) {
         // Redirigir a otra página si el código es correcto
