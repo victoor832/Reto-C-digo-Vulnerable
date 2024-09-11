@@ -75,17 +75,17 @@ void challenge_three(int x)
     function submitCode() {
       const currentCode = editor.getValue();
       const expectedCode = `
-void challenge_three(int x)
+void challenge_one()
 {
-    if (x != 0)
-    int result = 10 / x;
+      if (x != 0)
+      int result = 10 / x;
 }
 `;
 
       // Comparar el código sin espacios y tabs
       if (removeWhitespace(currentCode.trim()) === removeWhitespace(expectedCode.trim())) {
         // Redirigir a otra página si el código es correcto
-        window.location.href = "/reto_2/index_2.html";
+        window.location.href = "/pagina_final/index.html";
       } else {
         alert("El código no es correcto.");
       }
